@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 
-Route::resource('/siswa', SiswaController::class);
+Route::resource('siswa', SiswaController::class);
 Route::resource('kelas', KelasController::class);
 
 

@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Siswa extends Model
 {
-    protected $fillable=['nama', 'kelas', 'jurusan'];
+    use HasFactory;
 
+    protected $fillable = ['nama', 'kelas_id', 'jurusan'];
 
-    //protected $guarded=[];
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
 }
 
 

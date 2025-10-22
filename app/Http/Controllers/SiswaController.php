@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Siswa;
+use App\Models\Kelas;
 
 
 class SiswaController extends Controller
@@ -11,19 +12,18 @@ class SiswaController extends Controller
     /**
      * Display a listing of the resource.
      */
-      public function create()
-    {
-        return view('siswa.create');
-    }
+    public function create() {
+    $kelas = Kelas::all();
+    return view('siswa.create', compact('kelas'));
+}
 
-    public function index()
+
+  public function index()
 {
-    // Ambil semua data dari model Siswa
-    $siswas = \App\Models\Siswa::all();
-
-  
+    $siswas = Siswa::with('kelas')->get();
     return view('siswa.index', compact('siswas'));
 }
+
 
 
     /**
@@ -33,24 +33,22 @@ class SiswaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama'=>'required',
-            'kelas'=>'required',
-            'jurusan'=>'required',
-        ]);
+    public function store(Request $request)
+{
+    $request->validate([
+        'nama' => 'required',
+        'kelas_id' => 'required|exists:kelas,id',
+        'jurusan' => 'required',
+    ]);
 
+    Siswa::create([
+        'nama' => $request->nama,
+        'kelas_id' => $request->kelas_id, // ⬅️ ini wajib
+        'jurusan' => $request->jurusan,
+    ]);
 
-        Siswa::create([
-            'nama'=>$request->get('nama'),
-            'kelas'=>$request->get('kelas'),
-            'jurusan'=>$request->get('jurusan'),
-        ]);
-
-
-        return redirect()->route('siswa.index')->with('message','Siswa berhasil ditambahkan');
-    }
+    return redirect()->route('siswa.index')->with('message', 'Siswa berhasil ditambahkan!');
+}
 
 
     /**

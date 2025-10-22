@@ -34,7 +34,7 @@
           <tr>
             <td>{{ $index + 1 }}</td>
             <td>{{ $siswa->nama }}</td>
-            <td>{{ $siswa->kelas }}</td>
+            <td>{{ $siswa->kelas->nama_kelas ?? '-' }}</td>
             <td>{{ $siswa->jurusan }}</td>
             <td>
               <a href="{{ route('siswa.edit', $siswa->id) }}" class="btn btn-warning btn-sm">Edit</a>
