@@ -13,7 +13,8 @@ return new class extends Migration
             $table->string('nama');
             // relasi foreign key ke tabel kelas
             $table->foreignId('kelas_id')->constrained('kelas')->onDelete('cascade');
-            $table->string('jurusan');
+         $table->foreignId('jurusan_id')->constrained('jurusans')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

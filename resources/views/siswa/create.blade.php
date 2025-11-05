@@ -52,16 +52,18 @@
                 @enderror
             </div>
 
-            {{-- Input Jurusan --}}
-            <div class="mb-3">
-                <label for="jurusan" class="form-label">Jurusan</label>
-                <input type="text" class="form-control @error('jurusan') is-invalid @enderror" name="jurusan" value="{{ old('jurusan') }}">
-                @error('jurusan')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
+           <div class="mb-3">
+  <label for="jurusan_id" class="form-label">Jurusan</label>
+  <select name="jurusan_id" id="jurusan_id" class="form-select" required>
+      <option value="">-- Pilih Jurusan --</option>
+      @foreach($jurusans as $jurusan)
+          <option value="{{ $jurusan->id }}" {{ old('jurusan_id', $siswa->jurusan_id ?? '') == $jurusan->id ? 'selected' : '' }}>
+              {{ $jurusan->nama_jurusan }}
+          </option>
+      @endforeach
+  </select>
+</div>
+
 
             <button type="submit" class="btn btn-primary">Tambah</button>
         </form>
